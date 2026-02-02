@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amana Ecom - Delivery Risk Control System</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f7;
+            color: #1d1d1f;
+            line-height: 1.5;
+        }
+        
+        /* Header */
+        .header {
+            background: #fff;
+            border-bottom: 1px solid #e5e5e7;
+            padding: 16px 0;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+        
+        .demo-label {
+            background: #f5f5f7;
+            padding: 6px 14px;
+            border-radius: 12px;
+            font-size: 13px;
+            color: #6e6e73;
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: #fff;
+            border-radius: 12px;
+            padding: 48px 40px;
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        
+        .hero h1 {
+            font-size: 32px;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            color: #6e6e73;
+            margin-bottom: 32px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .btn-primary {
+            background: #0071e3;
+            color: #fff;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .btn-primary:hover {
+            background: #0077ed;
+        }
+        
+        /* Navigation */
+        .nav-tabs {
+            display: flex;
+            gap: 8px;
+            background: #fff;
+            padding: 8px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            overflow-x: auto;
+        }
+        
+        .nav-tab {
+            padding: 10px 20px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            color: #6e6e73;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+        
+        .nav-tab:hover {
+            background: #f5f5f7;
+        }
+        
+        .nav-tab.active {
+            background: #e8e8ed;
+            color: #1d1d1f;
+        }
+        
+        /* Screen */
+        .screen {
+            display: none;
+        }
+        
+        .screen.active {
+            display: block;
+        }
+        
+        /* Card */
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        
+        .card h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        .card-subtitle {
+            color: #6e6e73;
+            font-size: 15px;
+            margin-bottom: 24px;
+        }
+        
+        /* Metrics */
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .metric {
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #e5e5e7;
+        }
+        
+        .metric-value {
+            font-size: 32px;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin-bottom: 4px;
+        }
+        
+        .metric-label {
+            font-size: 13px;
+            color: #6e6e73;
+        }
+        
+        /* Risk Badge */
+        .risk-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .risk-normal {
+            background: #d1f4e0;
+            color: #0a7d3e;
+        }
+        
+        .risk-watch {
+            background: #fff3cd;
+            color: #997404;
+        }
+        
+        .risk-high {
+            background: #f8d7da;
+            color: #a41e22;
+        }
+        
+        /* Case List */
+        .case-list {
+            border-top: 1px solid #e5e5e7;
+        }
+        
+        .case-item {
+            padding: 16px 0;
+            border-bottom: 1px solid #e5e5e7;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .case-item:last-child {
+            border-bottom: none;
+        }
+        
+        .case-info h4 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .case-info p {
+            font-size: 13px;
+            color: #6e6e73;
+        }
+        
+        .case-status {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        /* Status Badge */
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .status-open {
+            background: #fff3cd;
+            color: #997404;
+        }
+        
+        .status-resolved {
+            background: #d1f4e0;
+            color: #0a7d3e;
+        }
+        
+        .status-review {
+            background: #cfe2ff;
+            color: #084298;
+        }
+        
+        /* Form */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #1d1d1f;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #d2d2d7;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #0071e3;
+        }
+        
+        .form-group small {
+            display: block;
+            margin-top: 4px;
+            font-size: 12px;
+            color: #6e6e73;
+        }
+        
+        /* Button */
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-secondary {
+            background: #e8e8ed;
+            color: #1d1d1f;
+        }
+        
+        .btn-secondary:hover {
+            background: #d2d2d7;
+        }
+        
+        /* Info Box */
+        .info-box {
+            background: #f5f5f7;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 3px solid #0071e3;
+        }
+        
+        .info-box strong {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+        
+        .info-box p {
+            font-size: 13px;
+            color: #6e6e73;
+            margin: 0;
+        }
+        
+        /* Timeline */
+        .timeline {
+            margin-top: 24px;
+        }
+        
+        .timeline-item {
+            padding: 16px 0;
+            border-left: 2px solid #e5e5e7;
+            padding-left: 24px;
+            position: relative;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -5px;
+            top: 20px;
+            width: 8px;
+            height: 8px;
+            background: #0071e3;
+            border-radius: 50%;
+        }
+        
+        .timeline-item h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .timeline-item p {
+            font-size: 13px;
+            color: #6e6e73;
+        }
+        
+        .timeline-item small {
+            font-size: 12px;
+            color: #86868b;
+        }
+        
+        /* Escrow Payment Styles */
+        .escrow-box {
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            border: 2px solid #10b981;
+            border-radius: 12px;
+            padding: 24px;
+            margin: 24px 0;
+        }
+        
+        .escrow-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .escrow-icon {
+            width: 48px;
+            height: 48px;
+            background: #10b981;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+        
+        .escrow-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #065f46;
+        }
+        
+        .escrow-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(16, 185, 129, 0.15);
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #047857;
+            margin-left: auto;
+        }
+        
+        .escrow-amount {
+            font-size: 32px;
+            font-weight: 700;
+            color: #065f46;
+            margin: 12px 0;
+        }
+        
+        .escrow-detail {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(16, 185, 129, 0.2);
+            font-size: 14px;
+        }
+        
+        .escrow-detail:last-child {
+            border-bottom: none;
+        }
+        
+        .escrow-detail-label {
+            color: #047857;
+            font-weight: 500;
+        }
+        
+        .escrow-detail-value {
+            color: #065f46;
+            font-weight: 600;
+        }
+        
+        .payment-method-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: white;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            border: 1px solid #d1fae5;
+        }
+        
+        .warning-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+        
+        .warning-box strong {
+            display: block;
+            color: #92400e;
+            margin-bottom: 4px;
+        }
+        
+        .warning-box p {
+            color: #78350f;
+            font-size: 13px;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">Amana Ecom - Risk Control System</div>
+            <div class="demo-label">Demo Version</div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <!-- Hero Section (Homepage) -->
+        <div id="hero" class="hero">
+            <h1>Neutral dispute & buyer risk control system for delivery companies — reduce losses without changing your workflow.</h1>
+            <p>Track delivery incidents, flag abusive behavior, and resolve disputes faster.</p>
+            <button class="btn-primary" onclick="showDemo()">View system demo</button>
+        </div>
+        
+        <!-- Navigation -->
+        <div id="navigation" class="nav-tabs" style="display: none;">
+            <button class="nav-tab active" onclick="showScreen('cases')">📋 Cases</button>
+            <button class="nav-tab" onclick="showScreen('risk')">⚠️ Risk Monitoring</button>
+            <button class="nav-tab" onclick="showScreen('submit')">➕ Submit Case</button>
+        </div>
+        
+        <!-- SCREEN 1: Cases Dashboard -->
+        <div id="cases" class="screen">
+            <div class="card">
+                <h2>Case Management</h2>
+                <p class="card-subtitle">Track and resolve delivery incidents</p>
+                
+                <div class="metrics">
+                    <div class="metric">
+                        <div class="metric-value">12</div>
+                        <div class="metric-label">Open Cases</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">3</div>
+                        <div class="metric-label">Needs Review</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">147</div>
+                        <div class="metric-label">Resolved This Week</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">82%</div>
+                        <div class="metric-label">Auto-Resolved</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>Recent Cases</h3>
+                <div class="case-list">
+                    <div class="case-item">
+                        <div class="case-info">
+                            <h4>Case #2841 - Package not delivered</h4>
+                            <p>Order ORD-5472 • Submitted 25 min ago</p>
+                        </div>
+                        <div class="case-status">
+                            <span class="risk-badge risk-normal">Normal</span>
+                            <span class="status-badge status-review">Under Review</span>
+                        </div>
+                    </div>
+                    
+                    <div class="case-item">
+                        <div class="case-info">
+                            <h4>Case #2840 - Damaged package</h4>
+                            <p>Order ORD-5461 • Submitted 1 hour ago</p>
+                        </div>
+                        <div class="case-status">
+                            <span class="risk-badge risk-watch">Watch</span>
+                            <span class="status-badge status-open">Open</span>
+                        </div>
+                    </div>
+                    
+                    <div class="case-item">
+                        <div class="case-info">
+                            <h4>Case #2839 - Delivery refused</h4>
+                            <p>Order ORD-5448 • Submitted 3 hours ago</p>
+                        </div>
+                        <div class="case-status">
+                            <span class="risk-badge risk-high">High Risk</span>
+                            <span class="status-badge status-resolved">Resolved</span>
+                        </div>
+                    </div>
+                    
+                    <div class="case-item">
+                        <div class="case-info">
+                            <h4>Case #2838 - Address incorrect</h4>
+                            <p>Order ORD-5432 • Resolved 5 hours ago</p>
+                        </div>
+                        <div class="case-status">
+                            <span class="risk-badge risk-normal">Normal</span>
+                            <span class="status-badge status-resolved">Resolved</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Case Details Example -->
+            <div class="card">
+                <h3>Case #2841 Details</h3>
+                <p class="card-subtitle">High-risk buyer - Prepayment required via escrow</p>
+                
+                <div class="warning-box">
+                    <strong>⚠️ High-Risk Buyer Detected</strong>
+                    <p>This buyer has 5 delivery refusals in the past 30 days. Prepayment via escrow is required before delivery.</p>
+                </div>
+                
+                <div class="info-box">
+                    <strong>Buyer Risk Level: <span class="risk-badge risk-high">High Risk</span></strong>
+                    <p>Based on repeated refusals or delivery issues.</p>
+                </div>
+                
+                <!-- ESCROW PAYMENT BOX -->
+                <div class="escrow-box">
+                    <div class="escrow-header">
+                        <div class="escrow-icon">🔒</div>
+                        <div style="flex: 1;">
+                            <div class="escrow-title">Payment Secured in Escrow</div>
+                            <div style="font-size: 13px; color: #047857; margin-top: 4px;">Protected by Chargily - Funds held until delivery confirmed</div>
+                        </div>
+                        <div class="escrow-status">
+                            ✅ Paid
+                        </div>
+                    </div>
+                    
+                    <div class="escrow-amount">89,000 DZD</div>
+                    
+                    <div class="payment-method-badge">
+                        💳 Paid via BaridiMob
+                    </div>
+                    
+                    <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(16, 185, 129, 0.3);">
+                        <div class="escrow-detail">
+                            <span class="escrow-detail-label">Escrow Status:</span>
+                            <span class="escrow-detail-value">🔒 Held (Awaiting delivery)</span>
+                        </div>
+                        <div class="escrow-detail">
+                            <span class="escrow-detail-label">Payment Date:</span>
+                            <span class="escrow-detail-value">Jan 15, 2026 - 2:30 PM</span>
+                        </div>
+                        <div class="escrow-detail">
+                            <span class="escrow-detail-label">Auto-release:</span>
+                            <span class="escrow-detail-value">72 hours after delivery</span>
+                        </div>
+                        <div class="escrow-detail">
+                            <span class="escrow-detail-label">Will release to:</span>
+                            <span class="escrow-detail-value">Merchant (86,330 DZD after 3% fee)</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <strong style="display: block; margin-bottom: 8px; font-size: 14px;">Order Details:</strong>
+                    <p style="font-size: 14px; color: #6e6e73;">
+                        Order: ORD-5472<br>
+                        Product: Samsung Galaxy S24 (256GB)<br>
+                        Merchant: Tech Store DZ<br>
+                        Delivery Company: Yalidine Express
+                    </p>
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <strong style="display: block; margin-bottom: 8px; font-size: 14px;">Delivery Status:</strong>
+                    <div style="background: #cfe2ff; padding: 12px; border-radius: 8px; font-size: 13px; color: #084298;">
+                        📦 Out for delivery - Expected delivery today by 5:00 PM
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <strong style="display: block; margin-bottom: 8px; font-size: 14px;">Evidence Attached:</strong>
+                    <div style="display: flex; gap: 12px;">
+                        <div style="width: 80px; height: 80px; background: #f5f5f7; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 24px;">📸</div>
+                        <div style="width: 80px; height: 80px; background: #f5f5f7; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 24px;">🕐</div>
+                        <div style="width: 80px; height: 80px; background: #f5f5f7; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 24px;">📍</div>
+                    </div>
+                    <small style="color: #6e6e73; margin-top: 8px; display: block;">Package photo, timestamp, GPS location</small>
+                </div>
+                
+                <div>
+                    <strong style="display: block; margin-bottom: 12px; font-size: 14px;">Next Actions:</strong>
+                    <button class="btn btn-primary" style="margin-right: 8px;">✅ Confirm Delivery (Release Escrow)</button>
+                    <button class="btn btn-secondary">❌ Report Issue (Refund Buyer)</button>
+                </div>
+            </div>
+            
+            <!-- ANOTHER EXAMPLE: Normal Risk (COD Allowed) -->
+            <div class="card">
+                <h3>Case #2839 Details - Normal Risk Buyer</h3>
+                <p class="card-subtitle">Standard COD order - No prepayment required</p>
+                
+                <div class="info-box">
+                    <strong>Buyer Risk Level: <span class="risk-badge risk-normal">Normal</span></strong>
+                    <p>Clean delivery history - COD payment allowed.</p>
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <strong style="display: block; margin-bottom: 8px; font-size: 14px;">Payment Method:</strong>
+                    <div style="background: #d1fae5; padding: 12px; border-radius: 8px; font-size: 13px; color: #065f46;">
+                        💵 COD (Cash on Delivery) - 45,000 DZD<br>
+                        Payment will be collected upon delivery
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <strong style="display: block; margin-bottom: 8px; font-size: 14px;">Delivery Status:</strong>
+                    <p style="font-size: 14px; color: #6e6e73;">Successfully delivered today at 3:15 PM - Cash collected</p>
+                </div>
+                
+                <div>
+                    <span class="status-badge status-resolved">✅ Resolved - No issues</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SCREEN 2: Risk Monitoring -->
+        <div id="risk" class="screen">
+            <div class="card">
+                <h2>Risk Monitoring</h2>
+                <p class="card-subtitle">Supervision and trend overview</p>
+                
+                <div class="metrics">
+                    <div class="metric">
+                        <div class="metric-value">23</div>
+                        <div class="metric-label">High-Risk Buyers</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">7.2%</div>
+                        <div class="metric-label">Refusal Rate (This Week)</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">41</div>
+                        <div class="metric-label">Repeat Offenders Flagged</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">-18%</div>
+                        <div class="metric-label">Incident Reduction</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ESCROW METRICS CARD -->
+            <div class="card">
+                <h3>💰 Escrow Payment Protection</h3>
+                <p class="card-subtitle">Real-time escrow monitoring and financial protection</p>
+                
+                <div class="escrow-box">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                        <div>
+                            <div style="font-size: 13px; color: #047857; margin-bottom: 4px;">Total in Escrow</div>
+                            <div style="font-size: 28px; font-weight: 700; color: #065f46;">2,450,000 DZD</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 13px; color: #047857; margin-bottom: 4px;">Active Escrow Orders</div>
+                            <div style="font-size: 28px; font-weight: 700; color: #065f46;">28</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 13px; color: #047857; margin-bottom: 4px;">Released This Week</div>
+                            <div style="font-size: 28px; font-weight: 700; color: #065f46;">4,200,000 DZD</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 13px; color: #047857; margin-bottom: 4px;">Refunded This Week</div>
+                            <div style="font-size: 28px; font-weight: 700; color: #065f46;">350,000 DZD</div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(16, 185, 129, 0.3);">
+                        <div style="font-size: 14px; font-weight: 600; color: #065f46; margin-bottom: 12px;">💵 Payment Methods Used:</div>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                            <span class="payment-method-badge">💳 BaridiMob: 18 orders</span>
+                            <span class="payment-method-badge">💳 CIB Card: 7 orders</span>
+                            <span class="payment-method-badge">🏦 CCP Transfer: 3 orders</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="info-box" style="background: #ecfdf5; border-color: #10b981;">
+                    <strong style="color: #065f46;">✅ Escrow Protection Impact</strong>
+                    <p style="color: #047857;">Prevented losses: <strong>850,000 DZD this month</strong> by requiring prepayment from 17 high-risk buyers who would have refused delivery.</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>High-Risk Trends</h3>
+                <div class="info-box">
+                    <strong>📊 Pattern Detected</strong>
+                    <p>23 buyers have refused delivery 3+ times in the past 30 days. All now require prepayment via escrow.</p>
+                </div>
+                
+                <div class="case-list">
+                    <div class="case-item">
+                        <div class="case-info">
+                            <h4>Buyer #4721</h4>
+                            <p>5 refusals in 2 weeks • <strong>Escrow required</strong></p>
+                        </div>
+                        <div class="case-status">
+                            <span class="risk-badge risk-high">High Risk</span>
+                            <span class="payment-method-badge">🔒 Escrow Active</span>
+                        </div>
+                    </div>
+                    
+                    <div class="case-item">
+                        <div class="case-info">
+                            <h4>Buyer #3892</h4>
+                            <p>4 refusals in 3 weeks • <strong>2 orders in escrow (180,000 DZD)</strong></p>
+                        </div>
+                        <div class="case-status">
+                            <span class="risk-badge risk-high">High Risk</span>
+                            <span class="payment-method-badge">🔒 Escrow Active</span>
+                        </div>
+                    </div>
+                    
+                    <div class="case-item">
+                        <div class="case-info">
+                            <h4>Buyer #5104</h4>
+                            <p>3 disputes in 1 month • <strong>1 order in escrow (95,000 DZD)</strong></p>
+                        </div>
+                        <div class="case-status">
+                            <span class="risk-badge risk-watch">Watch</span>
+                            <span class="payment-method-badge">🔒 Escrow Active</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                            <h4>Buyer #5104</h4>
+                            <p>3 disputes in 1 month • Escalating pattern</p>
+                        </div>
+                        <div class="case-status">
+                            <span class="risk-badge risk-watch">Watch</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>Filter Cases</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+                    <div class="form-group">
+                        <label>Risk Level</label>
+                        <select>
+                            <option>All levels</option>
+                            <option>High Risk only</option>
+                            <option>Watch only</option>
+                            <option>Normal only</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Date Range</label>
+                        <select>
+                            <option>Last 7 days</option>
+                            <option>Last 30 days</option>
+                            <option>This month</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select>
+                            <option>All statuses</option>
+                            <option>Open only</option>
+                            <option>Resolved only</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SCREEN 3: Submit Case -->
+        <div id="submit" class="screen">
+            <div class="card">
+                <h2>Submit New Case</h2>
+                <p class="card-subtitle">Report a delivery incident or dispute</p>
+                
+                <div class="info-box">
+                    <strong>💬 WhatsApp Submission</strong>
+                    <p>WhatsApp is used only to submit a case reference. All processing happens inside the system.</p>
+                </div>
+                
+                <form>
+                    <div class="form-group">
+                        <label>Order Reference</label>
+                        <input type="text" placeholder="e.g., ORD-5472">
+                        <small>Enter the order number from your system</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Incident Type</label>
+                        <select>
+                            <option>Select incident type...</option>
+                            <option>Package not delivered</option>
+                            <option>Package damaged</option>
+                            <option>Delivery refused by buyer</option>
+                            <option>Address incorrect</option>
+                            <option>Other delivery issue</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Delivery Attempt Details</label>
+                        <textarea rows="4" placeholder="Describe what happened during the delivery attempt..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Attach Evidence (Optional)</label>
+                        <input type="file" multiple accept="image/*">
+                        <small>Photos, delivery confirmation, GPS data, etc.</small>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Submit Case</button>
+                </form>
+            </div>
+            
+            <!-- Case Flow Visualization -->
+            <div class="card">
+                <h3>Incident Processing Flow</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4>1. Incident Opened</h4>
+                        <p>Case submitted via system or WhatsApp reference</p>
+                        <small>Automated timestamp recorded</small>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>2. Evidence Attached</h4>
+                        <p>Photos, GPS data, delivery confirmation</p>
+                        <small>System validates completeness</small>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>3. System Recommendation</h4>
+                        <p>AI analyzes evidence and buyer history</p>
+                        <small>Optional - Provides guidance only</small>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>4. Final Decision by Company</h4>
+                        <p>Arbitrator reviews and makes decision</p>
+                        <small>Company maintains full control</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Show demo (hide hero, show navigation and cases)
+        function showDemo() {
+            document.getElementById('hero').style.display = 'none';
+            document.getElementById('navigation').style.display = 'flex';
+            showScreen('cases');
+        }
+        
+        // Show screen
+        function showScreen(screenName) {
+            // Hide all screens
+            const screens = document.querySelectorAll('.screen');
+            screens.forEach(screen => screen.classList.remove('active'));
+            
+            // Show selected screen
+            const targetScreen = document.getElementById(screenName);
+            if (targetScreen) {
+                targetScreen.classList.add('active');
+            }
+            
+            // Update nav tabs
+            const tabs = document.querySelectorAll('.nav-tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+                // Check if this tab's onclick matches the current screen
+                if (tab.getAttribute('onclick').includes(screenName)) {
+                    tab.classList.add('active');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
